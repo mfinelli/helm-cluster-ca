@@ -1,0 +1,29 @@
+---
+name: Release
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+      - uses: azure/setup-helm@v3
+      - run: helm plugin install https://github.com/hypnoglow/helm-s3.git
+      # - run: helm s3 init s3://finelli-helm-charts
+      - run: helm repo add mfinelli s3://finelli-helm-charts
+      - run: helm package .
+      - run: helm s3 push --relative ./cluster-ca-*.tgz mfinelli
+      - uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: cluster-ca-*.tgz
+          artifactContentType: application/gzip

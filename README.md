@@ -13,9 +13,40 @@ chart.
 
 ## usage
 
+The chart create a `ClusterIssuer`, so install it into the `cert-manager`
+namespace (though the exact namespace doesn't really matter):
+
 ```shell
 helm repo add mfinelli https://charts.finelli.dev
-helm install --namespace cert-manager mfinelli/cluster-ca
+helm install --namespace cert-manager cluster-ca mfinelli/cluster-ca
+```
+
+Then wherever you need a locally trusted certificate you can use the normal
+`Certificate` and reference the new cluster-wide CA:
+
+```yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: redis-server
+spec:
+  secretName: redis-server
+  subject:
+    organizations:
+      - yourorg
+  commonName: app-redis-master
+  dnsNames:
+    - app-redis-master.yourapp.svc.cluster.local
+  privateKey:
+    rotationPolicy: Always
+    algorithm: ECDSA
+    size: 256
+  usages:
+    - server auth
+  issuerRef:
+    name: cluster-ca-ca
+    kind: ClusterIssuer
+    group: cert-manager.io
 ```
 
 ## license

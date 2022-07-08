@@ -1,0 +1,13 @@
+In the `issuerRef` block of your `Certificate`s you can now reference
+the cluster CA:
+
+    apiVersion: cert-manager.io/v1
+    kind: Certificate
+    metadata:
+      name: cert
+    spec:
+      ...
+      issuerRef:
+        name: {{ include "cluster-ca.fullname" . }}-ca
+        kind: ClusterIssuer
+        group: cert-manager.io

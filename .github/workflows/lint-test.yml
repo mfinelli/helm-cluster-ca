@@ -13,6 +13,6 @@ jobs:
         with:
           python-version: 3.x
       - uses: helm/chart-testing-action@v2.2.1
-      - run: ct lint --chart-dirs . --charts cluster-ca
+      - run: ct lint --chart-dirs . --all
       - uses: helm/kind-action@v1
-      - run: ct install --chart-dirs . --charts cluster-ca
+      - run: ct install --chart-dirs . --all

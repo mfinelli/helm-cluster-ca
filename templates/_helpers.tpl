@@ -35,28 +35,7 @@ Common labels
 */}}
 {{- define "cluster-ca.labels" -}}
 helm.sh/chart: {{ include "cluster-ca.chart" . }}
-{{ include "cluster-ca.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-
-{{/*
-Selector labels
-*/}}
-{{- define "cluster-ca.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "cluster-ca.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "cluster-ca.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "cluster-ca.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}

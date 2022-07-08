@@ -10,11 +10,12 @@ spec:
   secretName: {{ include "cluster-ca.fullname" . }}-ca
   commonName: {{ include "cluster-ca.fullname" . }}-ca
   usages:
-    - client auth
-    - server auth
+    {{- range $usage := .Values.ca.usages }}
+    - {{ $usage }}
+    {{- end }}
   subject:
     organizations:
-      - {{ .Values.caOrganization }}
+      - {{ .Values.ca.organization }}
   privateKey:
     rotatePolicy: Always
     algorithm: ECDSA

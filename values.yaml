@@ -1,4 +1,8 @@
 nameOverride: ""
 fullnameOverride: ""
 
-caOrganization: ""
+ca:
+  organization: ""
+  usages:
+    - client auth
+    - server auth

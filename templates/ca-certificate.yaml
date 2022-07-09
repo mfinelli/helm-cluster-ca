@@ -17,7 +17,7 @@ spec:
     organizations:
       - {{ .Values.ca.organization }}
   privateKey:
-    rotationPolicy: Always
+    rotationPolicy: {{ .Values.ca.privateKeyRotationPolicy }}
     algorithm: ECDSA
     size: 256
   issuerRef:

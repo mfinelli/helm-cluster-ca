@@ -6,3 +6,4 @@ ca:
   usages:
     - client auth
     - server auth
+  privateKeyRotationPolicy: Always

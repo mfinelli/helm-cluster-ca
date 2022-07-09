@@ -13,6 +13,17 @@ jobs:
         with:
           python-version: 3.x
       - uses: helm/chart-testing-action@v2.2.1
-      - run: ct lint --debug --chart-dirs . --all
+
+      # we only have a single chart in our repository, but the chart-testing
+      # projects expects multiple, or at least for them to live under named
+      # sub-directories. these next few hacky steps simulate that on-the-fly
+      - run: |
+          helm package .
+          mkdir -p charts/cluster-ca
+          cd charts/cluster-ca
+          tar xf ../../cluster-ca-*.tgz
+          cd ../../
+
+      - run: ct lint --debug --all
       - uses: helm/kind-action@v1
-      - run: ct install --debug --chart-dirs . --all
+      - run: ct install --debug --all

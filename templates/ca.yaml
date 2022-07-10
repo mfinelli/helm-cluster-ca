@@ -2,9 +2,9 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: {{ include "cluster-ca.fullname" . }}-ca
+  name: {{ include "cluster-ca.fullname" . }}
   labels:
     {{- include "cluster-ca.labels" . | nindent 4 }}
 spec:
   ca:
-    secretName: {{ include "cluster-ca.fullname" . }}-ca
+    secretName: {{ include "cluster-ca.fullname" . }}

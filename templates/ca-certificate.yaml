@@ -2,13 +2,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ include "cluster-ca.fullname" . }}-ca
+  name: {{ include "cluster-ca.fullname" . }}
   labels:
     {{- include "cluster-ca.labels" . | nindent 4 }}
 spec:
   isCA: true
-  secretName: {{ include "cluster-ca.fullname" . }}-ca
-  commonName: {{ include "cluster-ca.fullname" . }}-ca
+  secretName: {{ include "cluster-ca.fullname" . }}
+  commonName: {{ include "cluster-ca.fullname" . }}
   usages:
     {{- range $usage := .Values.ca.usages }}
     - {{ $usage }}
@@ -23,4 +23,4 @@ spec:
   issuerRef:
     group: cert-manager.io
     kind: Issuer
-    name: {{ include "cluster-ca.fullname" . }}-ca-issuer
+    name: {{ include "cluster-ca.fullname" . }}-issuer

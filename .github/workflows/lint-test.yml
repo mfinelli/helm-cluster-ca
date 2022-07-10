@@ -24,6 +24,11 @@ jobs:
           tar xf ../cluster-ca-*.tgz
           cd ../
 
-      - run: ct lint --debug --charts cluster-ca
+      - run: ls charts
+      - run: ls charts/cluster-ca
+      - run: ls charts/cluster-ca/templates
+      - run: cat charts/cluster-ca/Chart.yaml
+
+      - run: ct lint --debug --chart-dir charts --charts cluster-ca
       - uses: helm/kind-action@v1
-      - run: ct install --debug --charts cluster-ca
+      - run: ct install --debug --chart-dir charts --charts cluster-ca

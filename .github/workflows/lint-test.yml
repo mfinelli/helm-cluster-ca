@@ -19,12 +19,11 @@ jobs:
       # sub-directories. these next few hacky steps simulate that on-the-fly
       - run: |
           helm package .
-          mkdir -p charts/cluster-ca
-          cd charts/cluster-ca
-          tar xf ../../cluster-ca-*.tgz
-          cd ../../
-          ls charts/cluster-ca
+          mkdir -p charts
+          cd charts
+          tar xf ../cluster-ca-*.tgz
+          cd ../
 
-      - run: ct lint --debug --chart-dirs charts --charts cluster-ca
+      - run: ct lint --debug --charts cluster-ca
       - uses: helm/kind-action@v1
-      - run: ct install --debug --chart-dir charts --charts cluster-ca
+      - run: ct install --debug --charts cluster-ca

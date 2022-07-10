@@ -1,0 +1,16 @@
+---
+name: Lint
+on: push
+
+jobs:
+  main:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: azure/setup-helm@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: helm/chart-testing-action@v2.2.1
+      - run: ct lint --debug --charts .

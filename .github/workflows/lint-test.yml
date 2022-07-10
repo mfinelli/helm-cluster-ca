@@ -19,6 +19,7 @@ jobs:
       - run: helm repo update
       - run: >
           helm install cert-manager jetstack/cert-manager
+            --context kind-chart-testing
             --namespace cert-manager --create-namespace
             --set installCRDs=true
       - run: ct install --debug --charts .

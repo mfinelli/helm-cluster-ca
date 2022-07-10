@@ -15,4 +15,10 @@ jobs:
       - uses: helm/chart-testing-action@v2.2.1
       - run: ct lint --debug --charts .
       - uses: helm/kind-action@v1
+      - run: helm repo add jetstack https://charts.jetstack.io
+      - run: helm repo update
+      - run: >
+          helm install cert-manager jetstack/cert-manager
+            --namespace cert-manager --create-namespace
+            --set installCRDs=true
       - run: ct install --debug --charts .

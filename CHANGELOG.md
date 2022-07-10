@@ -3,6 +3,10 @@
 This file important changes to the `helm-cluster-ca` project which attempts to
 follow [semantic versioning](https://semver.org).
 
+## v2.0.0 - 2022/07/10
+
+Rename resources to remove the redundant `-ca` suffix
+
 ## v1.1.0 - 2022/07/09
 
 Make private key rotation policy configurable
